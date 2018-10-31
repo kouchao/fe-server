@@ -11,7 +11,7 @@ Router.get('/', async (ctx) => {
 		ctx.body = err
 	}
 })
-Router.get('/countents/list', list.getLinks)
-Router.post('/countents/add', list.addLink)
+Router.get('/contents/list', list.getLinks)
+Router.post('/contents/add', list.addLink)
 
 module.exports = Router
