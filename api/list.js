@@ -13,7 +13,7 @@ const getLinks = async (ctx) => {
 
 		let data = await list.find({
 			type
-		}).sort({_id: -1})
+		}).sort({time: -1})
 
 		let count = await visit.count({
 			type
