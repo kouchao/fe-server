@@ -30,7 +30,7 @@ const getLinks = async (ctx) => {
 }
 
 const addLink = async (ctx) => {
-	let {title, link, type, random, tag} = ctx.request.body
+	let {title, link, type, random, tag, time} = ctx.request.body
 
 		try {
 
@@ -46,7 +46,8 @@ const addLink = async (ctx) => {
 				title,
 				type,
 				link,
-				tag
+				tag,
+				time: new Date(time)
 			});
 
 			ctx.body = {

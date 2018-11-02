@@ -32,6 +32,9 @@ let list = new Schema({
 	},
 	tag: {
 		type: String,
+	},
+	time: {
+		type: Date
 	}
 }, {
 	timestamps: {
