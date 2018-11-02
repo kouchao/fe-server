@@ -1,4 +1,5 @@
 const {list, visit} = require('../db');
+const { randomStr } = require('../config.js');
 
 function countAdd() {
 	visit.create({
@@ -23,20 +24,28 @@ const getLinks = async (ctx) => {
 }
 
 const addLink = async (ctx) => {
-	let {title, link} = ctx.request.body
+	let {title, link, random} = ctx.request.body
 
-	try {
-		await list.create({
-			title,
-			link
-		});
+	if(randomStr == random){
+		try {
+			await list.create({
+				title,
+				link
+			});
 
-		ctx.body = {
-			code: 0
+			ctx.body = {
+				code: 0
+			}
+		} catch (err) {
+			ctx.body = err
 		}
-	} catch (err) {
-		ctx.body = err
+	} else {
+		ctx.body = {
+			code: 1,
+			msg: '随机串不匹配'
+		}
 	}
+
 }
 
 
