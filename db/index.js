@@ -25,6 +25,13 @@ let list = new Schema({
 	link: {
 		type: String,
 		required: true
+	},
+	type: {
+		type: Number,
+		required: true
+	},
+	tag: {
+		type: String,
 	}
 }, {
 	timestamps: {
@@ -34,8 +41,8 @@ let list = new Schema({
 })
 
 let visit = new Schema({
-	event: {
-		type: String,
+	type: {
+		type: Number,
 		required: true
 	}
 }, {

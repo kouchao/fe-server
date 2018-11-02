@@ -1,17 +1,23 @@
 const {list, visit} = require('../db');
 const { randomStr } = require('../config.js');
 
-function countAdd() {
+function countAdd(type) {
 	visit.create({
-		event: 'getList'
+		type
 	})
 }
 const getLinks = async (ctx) => {
 	try {
-		countAdd()
+		let {type} = ctx.request.query
+		countAdd(type)
 
-		let data = await list.find().sort({_id: -1})
-		let count = await visit.count()
+		let data = await list.find({
+			type
+		}).sort({_id: -1})
+
+		let count = await visit.count({
+			type
+		})
 
 		ctx.body = {
 			code: 0,
@@ -24,27 +30,35 @@ const getLinks = async (ctx) => {
 }
 
 const addLink = async (ctx) => {
-	let {title, link, random} = ctx.request.body
+	let {title, link, type, random, tag} = ctx.request.body
 
-	if(randomStr == random){
 		try {
+
+			if(randomStr != random){
+				throw '随机串不匹配'
+			}
+
+			if(!type){
+				throw '类型不能为空'
+			}
+
 			await list.create({
 				title,
-				link
+				type,
+				link,
+				tag
 			});
 
 			ctx.body = {
 				code: 0
 			}
 		} catch (err) {
-			ctx.body = err
+			ctx.body = {
+				code: 1,
+				err
+			}
 		}
-	} else {
-		ctx.body = {
-			code: 1,
-			msg: '随机串不匹配'
-		}
-	}
+
 
 }
 
