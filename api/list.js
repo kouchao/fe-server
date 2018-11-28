@@ -8,24 +8,36 @@ function countAdd(type) {
 }
 const getLinks = async (ctx) => {
 	try {
-		let {type} = ctx.request.query
+		let {type, page, pageSize} = ctx.request.query
 		countAdd(type)
 
-		let data = await list.find({
+		const data = await list.find({
 			type
-		}).sort({time: -1})
+		})
+		.sort({time: -1})
+		.skip(page * pageSize || 0)
+		.limit(pageSize * 1 || 30)
 
-		let count = await visit.count({
+		const visited = await visit.count({
+			type
+		})
+
+		const total = await list.count({
 			type
 		})
 
 		ctx.body = {
 			code: 0,
 			data,
-			count
+			visited,
+			total
 		}
 	} catch (err) {
-		ctx.body = err
+		console.log(err)
+		ctx.body = {
+			code: 1,
+			err
+		}
 	}
 }
 
