@@ -1,5 +1,5 @@
 const Router = require('koa-router')();
-const { list } = require('../api');
+const { list, message } = require('../api');
 Router.get('/', async (ctx) => {
 	try {
 
@@ -13,5 +13,7 @@ Router.get('/', async (ctx) => {
 })
 Router.get('/contents/list', list.getLinks)
 Router.post('/contents/add', list.addLink)
+Router.get('/message/list', message.list)
+Router.post('/message/add', message.add)
 
 module.exports = Router

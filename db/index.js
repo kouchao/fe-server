@@ -55,11 +55,33 @@ let visit = new Schema({
 	}
 })
 
+let message = new Schema({
+	name: {
+		type: String,
+		required: true
+	},
+	content: {
+		type: String,
+		required: true
+	},
+	email: {
+		type: String,
+		required: true
+	}
+}, {
+	timestamps: {
+		createdAt: 'created',
+		updatedAt: 'updated'
+	}
+})
+
 list = mongoose.model('list', list)
 visit = mongoose.model('visit', visit)
+message = mongoose.model('message', message)
 
 module.exports = {
 	list,
-	visit
+	visit,
+	message
 }
 
