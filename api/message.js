@@ -4,7 +4,7 @@ const list = async (ctx) => {
 	try {
 		let {page, pageSize} = ctx.request.query
 
-		const data = await message.find()
+		const data = await message.find({},{name: 1, content: 1})
 		.sort({time: -1})
 		.skip(page * pageSize || 0)
 		.limit(pageSize * 1 || 30)
