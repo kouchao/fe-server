@@ -1,12 +1,12 @@
-## 关于config.js
+## 关于config.ts
 
 ```
-const mongoHost = 'mongodb://xxx'
-const mongoPort = 'xxx'
-const mongoDatabase = 'xxx'
-const randomStr = 'f06f3fb0de5011e89f32f2801f1b9fd1'
+const mongoHost = '数据库地址'
+const mongoPort = '数据库端口'
+const mongoDatabase = '数据库名字'
+const randomStr = '随机串'
 
-module.exports = {
+export {
 	mongoHost,
 	mongoPort,
 	mongoDatabase,
