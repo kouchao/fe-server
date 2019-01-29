@@ -1,28 +1,29 @@
-const {list, visit} = require('../db');
-const { randomStr } = require('../config.js');
+import {List, Visit} from '../models';
+const { randomStr } = require('../config/config.js');
 
 function countAdd(type) {
-	visit.create({
+	Visit.create({
 		type
 	})
 }
-const getLinks = async (ctx) => {
+
+export const getLinks = async (ctx) => {
 	try {
 		let {type, page, pageSize} = ctx.request.query
 		countAdd(type)
 
-		const data = await list.find({
+		const data = await List.find({
 			type
 		})
 		.sort({time: -1})
 		.skip(page * pageSize || 0)
 		.limit(pageSize * 1 || 30)
 
-		const visited = await visit.count({
+		const visited = await Visit.count({
 			type
 		})
 
-		const total = await list.count({
+		const total = await List.count({
 			type
 		})
 
@@ -41,7 +42,7 @@ const getLinks = async (ctx) => {
 	}
 }
 
-const addLink = async (ctx) => {
+export const addLink = async (ctx) => {
 	let {title, link, type, random, tag, time} = ctx.request.body
 
 		try {
@@ -54,7 +55,7 @@ const addLink = async (ctx) => {
 				throw '类型不能为空'
 			}
 
-			await list.create({
+			await List.create({
 				title,
 				type,
 				link,
@@ -73,10 +74,4 @@ const addLink = async (ctx) => {
 		}
 
 
-}
-
-
-module.exports = {
-	getLinks,
-	addLink
 }

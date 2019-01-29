@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "tsc && node ./dist/app.js"
   },
   "keywords": [],
   "author": "kouchao",
@@ -17,5 +18,9 @@
     "koa-router": "^7.4.0",
     "koa2-cors": "^2.0.5",
     "mongoose": "^5.1.5"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.3.10",
+    "typescript": "^3.2.4"
   }
 }
