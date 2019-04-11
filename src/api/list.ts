@@ -41,6 +41,7 @@ function sendDingDing(lists){
 		let md = {
 			msgtype: 'markdown',
 			markdown: {
+				title: '每日早报',
 				text: '### 每日早报 \n'
 			},
 			at: {
@@ -55,7 +56,13 @@ function sendDingDing(lists){
 
 		dingding.forEach(token => {
 			const url = `https://oapi.dingtalk.com/robot/send?access_token=${token}`
-			axios.post(url, md)
+			console.log(url)
+
+			axios.post(url, md).then((res) => {
+				console.log(res.data)
+			}).catch((err) => {
+				console.log(err)
+			})
 		})
 	
 		
