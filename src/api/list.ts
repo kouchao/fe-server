@@ -36,13 +36,14 @@ function getList(msg, time, type) {
 
 
 // 发送钉钉
-function sendDingDing(lists){
+function sendDingDing(lists, type){
 	try {
+		const title = type == '0' ? '前端艺术家早报' : '飞冰早报'
 		let md = {
 			msgtype: 'markdown',
 			markdown: {
-				title: '每日早报',
-				text: '### 每日早报 \n'
+				title,
+				text: `### ${title} \n`
 			},
 			at: {
 				isAtAll: false
@@ -123,7 +124,7 @@ export const addLink = async (ctx) => {
 			}
 
 			const lists = getList(msg, time, type)
-			sendDingDing(lists)
+			sendDingDing(lists, type)
 			await List.insertMany(lists)
 			ctx.body = {
 				code: 0
