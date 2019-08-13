@@ -35,6 +35,30 @@ function getList(msg, time, type) {
 }
 
 
+// 处理markdown数据
+function getMarkdownList(msg, time, type){
+	msg = msg.replace(/\t+/g,'').replace(/\n\n+/g,'\n').split('\n')
+			
+	msg = msg.map(o => {
+		const [value, tag, title, link] = o.match(/- \[(.*)\] \[(.*)\]\((.*)\)/)
+		return title && link ? {
+			title,
+			link,
+			type,
+			time,
+			tag
+		} : {
+			title: '记录失败！请检查',
+			link: '/',
+			type,
+			time,
+			tag
+		}
+	}).filter(o => o)
+	return msg
+}
+
+
 // 发送钉钉
 function sendDingDing(lists, type){
 	try {
@@ -111,7 +135,7 @@ export const getLinks = async (ctx) => {
 }
 
 export const addLink = async (ctx) => {
-	let {msg, type, random, time} = ctx.request.body
+	let {msg, type, random, time, isMarkdown} = ctx.request.body
 
 		try {
 
@@ -123,7 +147,7 @@ export const addLink = async (ctx) => {
 				throw '类型不能为空'
 			}
 
-			const lists = getList(msg, time, type)
+			const lists = isMarkdown ? getMarkdownList(msg, time, type) : getList(msg, time, type)
 			sendDingDing(lists, type)
 			await List.insertMany(lists)
 			ctx.body = {
